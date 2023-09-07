@@ -1,3 +1,5 @@
+//TODO: to ask : :p errors , send vs json ,
+
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -18,10 +20,30 @@ exports.RegisterUser = async (req, res) => {
   }
 };
 
-// exports.login=async(req,res)=>{
-// try {
-//     const user=user.
-// } catch (error) {
-
-// }
-// }
+exports.Login = async (req, res) => {
+  try {
+    const found = await User.findOne({ email: req.body.email });
+    if (found) {
+      const validPassword = bcrypt.compareSync(
+        req.body.password,
+        found.password
+      );
+      if (validPassword) {
+        const payload = {
+          userId: found._id,
+          isAdmin: found.isAdmin,
+        };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+          expiresIn: "4d",
+        });
+        res.json({ message: "User login successfully", token: token });
+      } else {
+        res.status(400).json({ message: "Email or password incorrect" });
+      }
+    } else {
+      res.status(400).json({ message: "Email or password incorrect" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Error server" });
+  }
+};
