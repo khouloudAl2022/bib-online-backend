@@ -11,6 +11,17 @@ connectDb();
 const app = express();
 app.use(morgan("tiny"));
 app.use(express.json());
+
+app.use(
+  session({
+    resave: true,
+    secret: process.env.SECRETKEY,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/api/auth", authApi);
 
 app.listen(process.env.PORT || 5001, () => {
