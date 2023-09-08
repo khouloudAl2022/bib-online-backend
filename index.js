@@ -6,6 +6,8 @@ const session = require("express-session");
 const connectDb = require("./config/connectDb");
 const authApi = require("./routes/auth");
 const booksApi = require("./routes/book");
+const catApi = require("./routes/category");
+
 require("dotenv").config();
 connectDb();
 
@@ -25,6 +27,8 @@ app.use(passport.session());
 
 app.use("/api/auth", authApi);
 app.use("/api/books", booksApi);
+app.use("/api/categories", catApi);
+
 app.use("/uploads", express.static("uploads"));
 
 app.listen(process.env.PORT || 5001, () => {
