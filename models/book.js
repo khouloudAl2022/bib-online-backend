@@ -5,7 +5,7 @@ const bookSchema = new mongoose.Schema(
     title: { type: String, required: true },
     author: { type: String, required: true },
     desc: { type: String, required: true },
-    content: { type: File, required: true },
+    content: { type: String, required: true },
   },
   { timestamps: true }
 );
