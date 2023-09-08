@@ -17,6 +17,7 @@ const AddBook = async (req, res) => {
 const Getbooks = async (req, res) => {
   try {
     const books = await Book.find();
+    console.log(books);
     res.status(200).send(books);
   } catch (error) {
     res.status(500).json({ message: error.message || "Server error!" });

@@ -4,7 +4,7 @@ const upload = require("../middleware/multer");
 const router = require("express").Router();
 // router.route("/").get(Getbooks).post((upload.single("file")),AddBook)
 router.post("/", upload.single("file"), AddBook);
-router.get("getbooks", Getbooks);
-router.get("/downloadfile", DownloadFile);
+router.get("/getbooks", Getbooks);
+router.get("/downloadfile/:id", DownloadFile);
 
 module.exports = router;
