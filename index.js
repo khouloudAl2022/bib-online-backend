@@ -5,6 +5,7 @@ const passport = require("passport");
 const session = require("express-session");
 const connectDb = require("./config/connectDb");
 const authApi = require("./routes/auth");
+const booksApi = require("./routes/book");
 require("dotenv").config();
 connectDb();
 
@@ -23,6 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/auth", authApi);
+app.use("/api/books", booksApi);
 
 app.listen(process.env.PORT || 5001, () => {
   console.log(`Your server is running on ${process.env.PORT}`);
