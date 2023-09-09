@@ -4,16 +4,18 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 passport.use(
-  new BearerStrategy((token, done) => {
-    const decodedData = jwt.verify(token, process.env.SECRETKEY);
-    User.findById(decodedData.userId, (err, user) => {
-      if (err) {
-        return done(err);
-      }
+  new BearerStrategy(async (token, done) => {
+    try {
+      const decodedData = jwt.verify(token, process.env.SECRETKEY);
+      const user = await User.findById(decodedData.userId);
+      
       if (!user) {
         return done(null, false);
       }
+      
       return done(null, user, { scope: "all" });
-    });
+    } catch (err) {
+      return done(err);
+    }
   })
 );

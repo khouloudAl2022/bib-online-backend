@@ -1,7 +1,7 @@
 // exports.createUser=async(req,res)=>{
 // try {
-//     const 
+//     const
 // } catch (error) {
-    
+
 // }
 // }

@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const passport = require("passport");
 const session = require("express-session");
+const passport = require("passport");
 const connectDb = require("./config/connectDb");
 const authApi = require("./routes/auth");
 const booksApi = require("./routes/book");
@@ -10,11 +10,14 @@ const catApi = require("./routes/category");
 
 require("dotenv").config();
 connectDb();
+require("./passport/passport");
 
 const app = express();
+app.use(passport.initialize());
+
 app.use(morgan("tiny"));
 app.use(express.json());
-
+app.use(cors());
 app.use(
   session({
     resave: true,
@@ -22,7 +25,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/auth", authApi);
